@@ -5,7 +5,7 @@ namespace WebApplication1.Data
 {
     public class WebApplication1 : DbContext
     {
-        public DbSet<person> People { get; set; }
+        public DbSet<Person> People { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<MovieLink> MovieLinks { get; set; }
 
