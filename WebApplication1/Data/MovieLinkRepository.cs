@@ -42,5 +42,9 @@ namespace WebApplication1.Data
                 _context.SaveChanges();
             }
         }
+        public IEnumerable<MovieLink> GetMovieLinksForPerson(int personId)
+        {
+            return _context.Set<MovieLink>().Where(ml => ml.PersonId == personId).ToList(); //implementation 
+        }
     }
 }

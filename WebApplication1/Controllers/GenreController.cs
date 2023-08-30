@@ -20,6 +20,7 @@ namespace WebApplication1.Controllers
             var genres = _genreRepository.GetAllGenres();
             return Ok(genres);
         }
+       
         //Get genre ID
         [HttpGet("{id}")]
         public IActionResult GetGenreById(int id)

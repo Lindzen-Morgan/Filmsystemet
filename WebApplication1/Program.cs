@@ -13,13 +13,13 @@ namespace WebApplication1
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            //using Swagger 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            //configure Swagget HTTPS
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

@@ -22,6 +22,8 @@ namespace WebApplication1.Controllers
             return Ok(people);
         }
 
+
+
         //Get api/person id
         [HttpGet("{id}")]
         public IActionResult GetPersonById(int id)
