@@ -9,6 +9,8 @@ namespace WebApplication1.Data
         void AddPerson(Person person);
         void UpdatePerson(Person person);
         void DeletePerson(int id);
-        
+        IEnumerable<Person> GetPeopleForPerson(int personId); 
+
+
     }
 }
