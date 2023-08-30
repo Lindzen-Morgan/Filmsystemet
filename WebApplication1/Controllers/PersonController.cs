@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
             _personRepository = personRepository;
         }
 
-        // GET: api/person
+        //get all persons
         [HttpGet]
         public IActionResult GetAllPeople()
         {
@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
             return Ok(people);
         }
 
-        // GET: api/person/1
+        //Get api/person id
         [HttpGet("{id}")]
         public IActionResult GetPersonById(int id)
         {
@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
             return Ok(person);
         }
 
-        // POST: api/person
+        //Post Person result
         [HttpPost]
         public IActionResult AddPerson([FromBody] Person person)
         {
@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
             return CreatedAtAction(nameof(GetPersonById), new { id = person.Id }, person);
         }
 
-        // PUT: api/person/1
+        //put api person id
         [HttpPut("{id}")]
         public IActionResult UpdatePerson(int id, [FromBody] Person person)
         {
@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
             return NoContent();
         }
 
-        // DELETE: api/person/1
+        //delete person id
         [HttpDelete("{id}")]
         public IActionResult DeletePerson(int id)
         {
