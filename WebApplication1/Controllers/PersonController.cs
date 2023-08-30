@@ -75,5 +75,11 @@ namespace WebApplication1.Controllers
             _personRepository.DeletePerson(id);
             return NoContent();
         }
+        [HttpGet("{personId}/people")]
+        public IActionResult GetPeopleForPerson(int personId)
+        {
+            var people = _personRepository.GetPeopleForPerson(personId); //get person
+            return Ok(people);
+        }
     }
 }
