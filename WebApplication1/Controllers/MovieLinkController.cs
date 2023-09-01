@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1App.Data;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -69,5 +70,33 @@ namespace WebApplication1.Controllers
             _movieLinkRepository.DeleteMovieLink(id);
             return NoContent();
         }
+        [HttpGet("~/api/Person/{personId}/movielinks")] //get all movies connected to a person
+        public IActionResult GetMovieLinksForPerson(int personId)
+        {
+            var movieLinks = _movieLinkRepository.GetMovieLinksForPerson(personId);
+            return Ok(movieLinks);
+        }
+        [HttpGet("~/api/Person/{personId}/movielinks/{movieLinkId}/rating")]
+        public IActionResult GetMovieLinkRating(int personId, int movieLinkId)
+        {
+            var rating = _movieLinkRepository.GetMovieLinkRating(personId, movieLinkId);
+            if (rating == null)
+            {
+                return NotFound();
+            }
+            return Ok(rating);
+        }
+        [HttpPost("~/api/Person/{personId}/movielinks/{movieLinkId}/rating")]
+        public IActionResult AddMovieLinkRating(int personId, int movieLinkId, [FromBody] MovieLinkRating rating) //adding Rating
+        {
+            if (rating == null)
+            {
+                return BadRequest();
+            }
+
+            _movieLinkRepository.AddMovieLinkRating(personId, movieLinkId, rating);
+            return CreatedAtAction(nameof(GetMovieLinkRating), new { personId, movieLinkId }, rating);
+        }
+        
     }
 }

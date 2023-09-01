@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace WebApplication1.Data
+namespace WebApplication1App.Data
 {
     public interface IGenreRepository
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using WebApplication1App.Data;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -14,11 +14,11 @@ namespace WebApplication1.Controllers
             _personRepository = personRepository;
         }
 
-        //get all persons
+        //get all persons API ENDPOINT
         [HttpGet]
         public IActionResult GetAllPeople()
         {
-            var people = _personRepository.GetAllPeople();
+            var people = _personRepository.GetAllPeople(); 
             return Ok(people);
         }
 
@@ -75,11 +75,33 @@ namespace WebApplication1.Controllers
             _personRepository.DeletePerson(id);
             return NoContent();
         }
-        [HttpGet("{personId}/people")]
+        
+        [HttpGet("~/api/Person/{personId}/people")]
         public IActionResult GetPeopleForPerson(int personId)
         {
-            var people = _personRepository.GetPeopleForPerson(personId); //get person
+            var people = _personRepository.GetPeopleForPerson(personId);
             return Ok(people);
         }
+        [HttpPost("{personId}/genres/{genreId}")] //Link person to genre
+        public IActionResult LinkPersonToGenre(int personId, int genreId)
+        {
+            _personRepository.LinkPersonToGenre(personId, genreId);
+            return NoContent();
+        }
+        [HttpGet("api/person/{personId}/genres")]
+        public IActionResult GetGenresForPerson(int personId)
+        {
+            var person = _personRepository.GetPersonById(personId);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            var genres = person.GenresInterested; //loading genres for person
+
+            return Ok(genres);
+        }
+        
+        
     }
 }

@@ -1,19 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Data
+namespace WebApplication1App.Data
 {
     public class PersonRepository : IPersonRepository
     {
-        private readonly DbContext _context; // Using the general DbContext type
+        private readonly WebApplication1App _context;
 
-        public PersonRepository(DbContext context)
+        public PersonRepository(WebApplication1App context)
         {
             _context = context;
         }
 
-        public IEnumerable<Person> GetAllPeople()
+        public IEnumerable<Person> GetAllPeople() //get all people
         {
-            return _context.Set<Person>().ToList();
+            return _context.People.ToList();
         }
 
         public Person GetPersonById(int id)
@@ -39,6 +39,21 @@ namespace WebApplication1.Data
             if (person != null)
             {
                 _context.Set<Person>().Remove(person);
+                _context.SaveChanges();
+            }
+        }
+        public IEnumerable<Person> GetPeopleForPerson(int personId)
+        {
+            return _context.People.Where(p => p.Id == personId).ToList();
+        }
+        public void LinkPersonToGenre(int personId, int genreId)
+        {
+            var person = _context.People.FirstOrDefault(p => p.Id == personId);
+            var genre = _context.Genres.FirstOrDefault(g => g.Id == genreId);
+
+            if (person != null && genre != null)
+            {
+                person.Genres.Add(genre);
                 _context.SaveChanges();
             }
         }

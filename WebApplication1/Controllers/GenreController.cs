@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using WebApplication1App.Data;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -69,10 +69,11 @@ namespace WebApplication1.Controllers
             _genreRepository.DeleteGenre(id);
             return NoContent();
         }
-        [HttpGet("{personId}/genres")]
+        
+        [HttpGet("~/api/Person/{personId}/genres")]
         public IActionResult GetGenresForPerson(int personId)
         {
-            var genres = _genreRepository.GetGenresForPerson(personId); //fetching genre for persons
+            var genres = _genreRepository.GetGenresForPerson(personId);
             return Ok(genres);
         }
     }

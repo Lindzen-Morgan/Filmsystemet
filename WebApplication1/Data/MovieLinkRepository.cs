@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Data
+namespace WebApplication1App.Data
 {
     public class MovieLinkRepository : IMovieLinkRepository
     {
-        private readonly DbContext _context;
+        private readonly WebApplication1App _context; 
 
-        public MovieLinkRepository(DbContext context)
+        public MovieLinkRepository(WebApplication1App context)
         {
             _context = context;
         }
@@ -44,7 +44,20 @@ namespace WebApplication1.Data
         }
         public IEnumerable<MovieLink> GetMovieLinksForPerson(int personId)
         {
-            return _context.Set<MovieLink>().Where(ml => ml.PersonId == personId).ToList(); //implementation 
+            return _context.MovieLinks.Where(ml => ml.PersonId == personId).ToList();
         }
+        public MovieLinkRating GetMovieLinkRating(int personId, int movieLinkId)
+        {
+            return _context.MovieLinkRatings.FirstOrDefault(r => r.PersonId == personId && r.MovieLinkId == movieLinkId);
+        }
+
+        public void AddMovieLinkRating(int personId, int movieLinkId, MovieLinkRating rating)
+        {
+            rating.PersonId = personId;
+            rating.MovieLinkId = movieLinkId;
+            _context.MovieLinkRatings.Add(rating);
+            _context.SaveChanges();
+        }
+
     }
 }
