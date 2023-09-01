@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication1App.Data; // Change the namespace here
+using WebApplication1App.Data; 
 
-namespace WebApplication1App // Change the namespace here
+
+namespace WebApplication1App 
 {
     public class Program
     {
@@ -28,7 +29,8 @@ namespace WebApplication1App // Change the namespace here
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+
             }
 
             app.UseHttpsRedirection();
