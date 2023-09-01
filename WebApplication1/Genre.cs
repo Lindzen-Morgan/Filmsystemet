@@ -9,10 +9,11 @@ namespace WebApplication1App.Data
         public string Description { get; set; }
 
         // Navigation property to connect with Person
-        public List<Person> PeopleInterested { get; set; } = new List<Person>();
         public List<MovieLink> MovieLinks { get; set; } = new List<MovieLink>();
         public int PersonId { get; set; }
         [ForeignKey("PersonId")]
         public Person Person { get; set; }
+        public ICollection<Person> PeopleInterested { get; set; }
+
     }
 }

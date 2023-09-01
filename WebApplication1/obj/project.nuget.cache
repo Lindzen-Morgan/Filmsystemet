@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "99+rn4nIMjNzWz9gdnsKUZQIphh0B2vu+0GvjbHQTLQLHtU0dUXFa+fpaCUiJx97Neoq6i7qQpa/FfF+AtyTAQ==",
+  "dgSpecHash": "1YZZYeQNGcgXc9f05G3SJfq4AuPogv1WTMSKlxl8O6sXYpq7KAQ1/QvGY1NLR7dRfQkFEBwxHq+N3y9T3x+bCQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\morga\\OneDrive\\Skrivbord\\Filmsystemet\\Filmsystemet\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
@@ -59,6 +59,7 @@
     "C:\\Users\\morga\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
+    "C:\\Users\\morga\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\microsoft.build\\17.3.2\\microsoft.build.17.3.2.nupkg.sha512",
@@ -125,6 +126,7 @@
     "C:\\Users\\morga\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\morga\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\nuget.common\\6.6.1\\nuget.common.6.6.1.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\nuget.configuration\\6.6.1\\nuget.configuration.6.6.1.nupkg.sha512",
     "C:\\Users\\morga\\.nuget\\packages\\nuget.dependencyresolver.core\\6.6.1\\nuget.dependencyresolver.core.6.6.1.nupkg.sha512",

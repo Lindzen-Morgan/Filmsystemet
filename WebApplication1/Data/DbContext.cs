@@ -9,18 +9,19 @@ namespace WebApplication1App.Data
         public DbSet<Person> People { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<MovieLink> MovieLinks { get; set; }
-        public DbSet<MovieLinkRating> MovieLinkRatings { get; set; } // Add this DbSet
+        public DbSet<MovieLinkRating> MovieLinkRatings { get; set; }
 
         public WebApplication1App(DbContextOptions<WebApplication1App> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // RElationship between person and Genre
-            modelBuilder.Entity<Person>()
-                .HasMany(p => p.GenresInterested)
-                .WithMany(g => g.PeopleInterested)
-                .UsingEntity(j => j.ToTable("PersonGenres"));
+            // Configure the relationship between Genre and Person
+            modelBuilder.Entity<Genre>()
+                .HasOne(g => g.Person)
+                .WithMany(p => p.GenresInterested) 
+                .HasForeignKey(g => g.PersonId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             
 
