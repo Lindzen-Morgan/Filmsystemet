@@ -82,13 +82,14 @@ namespace WebApplication1App.Controllers
             var people = _personRepository.GetPeopleForPerson(personId);
             return Ok(people);
         }
-        [HttpPost("{personId}/genres/{genreId}")] //Link person to genre
-        public IActionResult LinkPersonToGenre(int personId, int genreId)
+        [HttpPost("{personId}/genres/{genreId}")] // Link person to genre
+        public IActionResult LinkPersonToGenre(int personId, [FromBody] int genreId)
         {
             _personRepository.LinkPersonToGenre(personId, genreId);
             return NoContent();
         }
-        [HttpGet("api/person/{personId}/genres")]
+
+        [HttpGet("{personId}/genres")] // Get genres for a person
         public IActionResult GetGenresForPerson(int personId)
         {
             var person = _personRepository.GetPersonById(personId);
@@ -97,11 +98,11 @@ namespace WebApplication1App.Controllers
                 return NotFound();
             }
 
-            var genres = person.GenresInterested; //loading genres for person
+            var genres = person.GenresInterested; // Loading genres for person
 
             return Ok(genres);
         }
-        
-        
+
+
     }
 }

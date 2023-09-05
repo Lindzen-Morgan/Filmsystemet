@@ -69,8 +69,8 @@ namespace WebApplication1App.Controllers
             _genreRepository.DeleteGenre(id);
             return NoContent();
         }
-        
-        [HttpGet("~/api/Person/{personId}/genres")]
+
+        [HttpGet("~/api/person/{personId}/genres")] // Get genres for a person
         public IActionResult GetGenresForPerson(int personId)
         {
             var genres = _genreRepository.GetGenresForPerson(personId);

@@ -9,7 +9,7 @@ namespace WebApplication1App.Data
     {
         private readonly WebApplication1App _context;
 
-        public GenreRepository(WebApplication1App context)
+        public GenreRepository(WebApplication1App.Data.WebApplication1App context)
         {
             _context = context;
         }

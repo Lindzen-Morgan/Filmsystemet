@@ -6,7 +6,7 @@ namespace WebApplication1App.Data
     {
         private readonly WebApplication1App _context;
 
-        public PersonRepository(WebApplication1App context)
+        public PersonRepository(WebApplication1App.Data.WebApplication1App context)
         {
             _context = context;
         }

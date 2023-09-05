@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication1App.Data; 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using WebApplication1App.Data;
 
-
-namespace WebApplication1App 
+namespace WebApplication1App
 {
     public class Program
     {
@@ -11,32 +13,33 @@ namespace WebApplication1App
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<WebApplication1App.Data.WebApplication1App>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            );
+
             builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-
-
             builder.Services.AddScoped<IGenreRepository, GenreRepository>();
             builder.Services.AddControllers();
-            //using Swagger 
+
+            // Using Swagger
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1" });
+            });
 
             var app = builder.Build();
 
-            //configure Swagger HTTPS
+            // Configure Swagger HTTPS
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
-
             }
 
+            // Configure HTTPS redirection and routing
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
             app.MapControllers();
 
             app.Run();
