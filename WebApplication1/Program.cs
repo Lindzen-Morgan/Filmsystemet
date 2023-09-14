@@ -26,6 +26,8 @@ namespace WebApplication1App
 
             builder.Services.AddScoped<IPersonRepository, PersonRepository>();
             builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+            builder.Services.AddScoped<TmdbService>();
+
 
             builder.Services.AddControllers();
 
