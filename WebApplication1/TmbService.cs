@@ -1,6 +1,33 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+
+[ApiController]
+[Route("api/genres")]
+public class GenreController : ControllerBase
+{
+    private readonly TmdbService _tmdbService;
+
+    public GenreController(TmdbService tmdbService)
+    {
+        _tmdbService = tmdbService;
+    }
+
+    [HttpGet("{genreId}/suggestions")]
+    public async Task<IActionResult> GetMovieSuggestions(int genreId)
+    {
+        try
+        {
+            var recommendations = await _tmdbService.GetMovieRecommendationsAsync(genreId.ToString());
+            return Ok(recommendations);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching movie recommendations: {ex.Message}");
+        }
+    }
+}
 
 public class TmdbService
 {
@@ -13,6 +40,7 @@ public class TmdbService
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
     }
 
+
     public async Task<TmdbMovieRecommendations> GetMovieRecommendationsAsync(string genreId)
     {
         // Build URL for TMDB request
@@ -23,11 +51,10 @@ public class TmdbService
 
         if (response.IsSuccessStatusCode)
         {
-           //Json into c#
+            // Deserialize JSON into C#
             var content = await response.Content.ReadAsAsync<TmdbMovieRecommendations>();
             return content;
         }
-        
         else
         {
             // Handle API error responses

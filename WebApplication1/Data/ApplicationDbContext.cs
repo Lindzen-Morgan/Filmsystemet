@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
 
 namespace WebApplication1App.Data
 {
@@ -13,12 +14,16 @@ namespace WebApplication1App.Data
         public DbSet<Genre> Genres { get; set; }
         public DbSet<MovieLinkRating> MovieLinkRatings { get; set; }
         public DbSet<MovieLink> MovieLinks { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure your entity relationships and constraints here
-            // For example, you can define primary keys, foreign keys, etc.
+            
+        }
+        public ApplicationDbContext(DbContextOptions<WebApplication1AppDbContext> options)
+       : base(options)
+        {
         }
     }
 }

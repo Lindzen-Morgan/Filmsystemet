@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Data;
 using WebApplication1App.Data;
 
 namespace WebApplication1App.Controllers
@@ -15,7 +16,7 @@ namespace WebApplication1App.Controllers
         }
 
         //get all persons API ENDPOINT
-        [HttpGet]
+        
         [HttpGet]
         public IActionResult GetAllPeople(string nameFilter, int page = 1, int pageSize = 10)
         {
@@ -154,6 +155,32 @@ namespace WebApplication1App.Controllers
             };
 
             return Ok(result);
+        }
+        
+        [ApiController]
+        [Route("api/ratings")]
+        public class RatingController : ControllerBase
+        {
+            private readonly IRatingRepository _ratingRepository;
+
+            public RatingController(IRatingRepository ratingRepository)
+            {
+                _ratingRepository = ratingRepository;
+            }
+
+            [HttpPost]
+            public async Task<IActionResult> AddRating([FromBody] Rating rating)
+            {
+                var addedRating = await _ratingRepository.AddRatingAsync(rating);
+                return Ok(addedRating);
+            }
+
+            [HttpGet("{personId}")]
+            public async Task<IActionResult> GetRatingsForPerson(int personId)
+            {
+                var ratings = await _ratingRepository.GetRatingsForPersonAsync(personId);
+                return Ok(ratings);
+            }
         }
 
 

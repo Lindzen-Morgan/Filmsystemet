@@ -4,8 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging; // Added using statement for ILogger
 using WebApplication1App.Data;
 using WebApplication1App.Data.WebApplication1App.Data;
+using System;
+using System.Collections.Generic; // Added using statement for List
+using Microsoft.OpenApi.Models;
 
 namespace WebApplication1App
 {
@@ -14,6 +18,8 @@ namespace WebApplication1App
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Read configuration from appsettings.json
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(builder.Environment.ContentRootPath)
                 .AddJsonFile("appsettings.json")
@@ -28,16 +34,15 @@ namespace WebApplication1App
             builder.Services.AddScoped<IGenreRepository, GenreRepository>();
             builder.Services.AddHttpClient<TmdbService>();
             builder.Services.AddScoped<TmdbService>();
-            
-
-
+            builder.Services.AddSingleton(configuration.GetSection("ApiKey").Value);
 
             builder.Services.AddControllers();
+
 
             // Swagger configuration
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
             });
 
             var app = builder.Build();
@@ -49,7 +54,7 @@ namespace WebApplication1App
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
                 });
             }
             else
@@ -66,19 +71,21 @@ namespace WebApplication1App
             {
                 var services = scope.ServiceProvider;
                 var dbContext = services.GetRequiredService<WebApplication1AppDbContext>();
+                var logger = services.GetRequiredService<ILogger<Program>>(); // Get ILogger
 
                 try
                 {
-                    // Apply any pending migrations
                     dbContext.Database.Migrate();
 
                     // Seed the database with sample data
                     SeedData(dbContext);
+
+                    // Log successful database initialization
+                    logger.LogInformation("Database initialized and seeded successfully.");
                 }
                 catch (Exception ex)
                 {
-                    // Handle any exceptions that occur during migration or seeding
-                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    // Log any exceptions that occur during migration or seeding
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
@@ -88,30 +95,22 @@ namespace WebApplication1App
 
         private static void SeedData(WebApplication1AppDbContext context)
         {
-            // Create sample persons
             var persons = new List<Person>
-    {
-        new Person { Name = "John Doe" },
-        new Person { Name = "Jane Smith" },
-        // Add more persons as needed
-    };
+            {
+                new Person { Name = "John Doe" },
+                new Person { Name = "Jane Smith" },
+            };
 
-            // Create sample genres
             var genres = new List<Genre>
-    {
-        new Genre { Name = "Action" },
-        new Genre { Name = "Comedy" },
-        // Add more genres as needed
-    };
+            {
+                new Genre { Name = "Action" },
+                new Genre { Name = "Comedy" },
+            };
 
-            // Add persons and genres to the context
             context.People.AddRange(persons);
             context.Genres.AddRange(genres);
 
-            // Save changes to the database
             context.SaveChanges();
         }
-
-
     }
 }
