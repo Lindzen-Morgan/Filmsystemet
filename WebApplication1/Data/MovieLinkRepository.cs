@@ -4,9 +4,9 @@ namespace WebApplication1App.Data
 {
     public class MovieLinkRepository : IMovieLinkRepository
     {
-        private readonly WebApplication1App _context; 
+        private readonly WebApplication1AppDbContext _context; 
 
-        public MovieLinkRepository(WebApplication1App context)
+        public MovieLinkRepository(WebApplication1AppDbContext context)
         {
             _context = context;
         }

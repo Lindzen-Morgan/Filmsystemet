@@ -8,10 +8,12 @@ namespace WebApplication1App.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IGenreRepository _genreRepository;
+        private readonly TmdbService _tmdbService; // Inject TmdbService
 
-        public GenreController(IGenreRepository genreRepository)
+        public GenreController(IGenreRepository genreRepository, TmdbService tmdbService)
         {
             _genreRepository = genreRepository;
+            _tmdbService = tmdbService; // Initialize TmdbService
         }
         //get all genres
         [HttpGet]
@@ -76,5 +78,19 @@ namespace WebApplication1App.Controllers
             var genres = _genreRepository.GetGenresForPerson(personId);
             return Ok(genres);
         }
+        [HttpGet("~/api/genres/{genreId}/suggestions")]
+        public async Task<IActionResult> GetMovieSuggestions(int genreId)
+        {
+            try
+            {
+                var recommendations = await _tmdbService.GetMovieRecommendationsAsync(genreId.ToString());
+                return Ok(recommendations.Results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching movie recommendations: {ex.Message}");
+            }
+        }
+
     }
 }

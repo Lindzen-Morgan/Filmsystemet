@@ -4,14 +4,14 @@ using WebApplication1App.Data;
 
 namespace WebApplication1App.Data
 {
-    public class WebApplication1App : DbContext
+    public class WebApplication1AppDbContext : DbContext
     {
         public DbSet<Person> People { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<MovieLink> MovieLinks { get; set; }
         public DbSet<MovieLinkRating> MovieLinkRatings { get; set; }
 
-        public WebApplication1App(DbContextOptions<WebApplication1App> options) : base(options)
+        public WebApplication1AppDbContext(DbContextOptions<WebApplication1AppDbContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

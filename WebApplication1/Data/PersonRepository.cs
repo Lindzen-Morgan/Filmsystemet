@@ -2,16 +2,18 @@
 
 namespace WebApplication1App.Data
 {
-    public class PersonRepository : IPersonRepository
+    namespace WebApplication1App.Data
     {
-        private readonly WebApplication1App _context;
-
-        public PersonRepository(WebApplication1App.Data.WebApplication1App context)
+        public class PersonRepository : IPersonRepository
         {
-            _context = context;
-        }
+            private readonly WebApplication1AppDbContext _context;
 
-        public IEnumerable<Person> GetAllPeople() //get all people
+            public PersonRepository(WebApplication1AppDbContext context)
+            {
+                _context = context;
+            }
+
+            public IEnumerable<Person> GetAllPeople() //get all people
         {
             return _context.People.ToList();
         }
@@ -57,5 +59,28 @@ namespace WebApplication1App.Data
                 _context.SaveChanges();
             }
         }
+            public void AddMovieLinksForPersonAndGenre(int personId, int genreId, List<MovieLink> movieLinks)
+            {
+               
+                var person = _context.People.FirstOrDefault(p => p.Id == personId);
+                var genre = _context.Genres.FirstOrDefault(g => g.Id == genreId);
+
+                if (person != null && genre != null)
+                {
+                    foreach (var movieLink in movieLinks)
+                    {
+                        // Associate the movie link with the person and genre
+                        movieLink.Person = person;
+                        movieLink.Genre = genre;
+
+                        _context.MovieLinks.Add(movieLink);
+                    }
+
+                    _context.SaveChanges();
+                }
+            }
+
+        }
     }
 }
+

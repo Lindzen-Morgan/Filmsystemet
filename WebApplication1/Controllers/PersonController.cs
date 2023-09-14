@@ -102,6 +102,12 @@ namespace WebApplication1App.Controllers
 
             return Ok(genres);
         }
+        [HttpPost("~/api/Person/{personId}/genres/{genreId}/links")]
+        public IActionResult AddMovieLinksForPersonAndGenre(int personId, int genreId, [FromBody] List<MovieLink> movieLinks)
+        {
+            _personRepository.AddMovieLinksForPersonAndGenre(personId, genreId, movieLinks);
+            return NoContent();
+        }
 
 
     }

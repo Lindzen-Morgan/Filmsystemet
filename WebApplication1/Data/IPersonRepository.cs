@@ -12,6 +12,8 @@ namespace WebApplication1App.Data
         IEnumerable<Person> GetPeopleForPerson(int personId);
         void LinkPersonToGenre(int personId, int genreId);
         IEnumerable<Person> GetAllPeople();
+        void AddMovieLinksForPersonAndGenre(int personId, int genreId, List<MovieLink> movieLinks);
+
 
     }
 }
