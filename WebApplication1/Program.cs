@@ -26,7 +26,10 @@ namespace WebApplication1App
 
             builder.Services.AddScoped<IPersonRepository, PersonRepository>();
             builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+            builder.Services.AddHttpClient<TmdbService>();
             builder.Services.AddScoped<TmdbService>();
+            
+
 
 
             builder.Services.AddControllers();
@@ -84,10 +87,31 @@ namespace WebApplication1App
         }
 
         private static void SeedData(WebApplication1AppDbContext context)
+        {
+            // Create sample persons
+            var persons = new List<Person>
     {
-        // Create sample persons, genres, and link them as needed
-        // Similar to the DataSeeder.SeedData method shown earlier
-    }
+        new Person { Name = "John Doe" },
+        new Person { Name = "Jane Smith" },
+        // Add more persons as needed
+    };
 
-}
+            // Create sample genres
+            var genres = new List<Genre>
+    {
+        new Genre { Name = "Action" },
+        new Genre { Name = "Comedy" },
+        // Add more genres as needed
+    };
+
+            // Add persons and genres to the context
+            context.People.AddRange(persons);
+            context.Genres.AddRange(genres);
+
+            // Save changes to the database
+            context.SaveChanges();
+        }
+
+
+    }
 }
