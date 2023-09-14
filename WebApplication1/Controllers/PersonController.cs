@@ -16,11 +16,35 @@ namespace WebApplication1App.Controllers
 
         //get all persons API ENDPOINT
         [HttpGet]
-        public IActionResult GetAllPeople()
+        [HttpGet]
+        public IActionResult GetAllPeople(string nameFilter, int page = 1, int pageSize = 10)
         {
-            var people = _personRepository.GetAllPeople(); 
-            return Ok(people);
+            var people = _personRepository.GetAllPeople();
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                // Apply the name filter if provided
+                people = people.Where(p => p.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            var totalCount = people.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            var results = people.Skip((page - 1) * pageSize).Take(pageSize);
+
+            var response = new
+            {
+                TotalCount = totalCount,
+                TotalPages = totalPages,
+                Page = page,
+                PageSize = pageSize,
+                Results = results
+            };
+
+            return Ok(response);
         }
+
+
 
 
 
@@ -108,6 +132,30 @@ namespace WebApplication1App.Controllers
             _personRepository.AddMovieLinksForPersonAndGenre(personId, genreId, movieLinks);
             return NoContent();
         }
+        [HttpGet("{id}/genres-and-links")]
+        public IActionResult GetGenresAndLinksForPerson(int id)
+        {
+            var person = _personRepository.GetPersonById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            var result = new
+            {
+                Person = new
+                {
+                    Id = person.Id,
+                    Name = person.Name,
+                    Email = person.Email
+                },
+                Genres = person.GenresInterested,
+                Links = person.MovieLinks
+            };
+
+            return Ok(result);
+        }
+
 
 
     }
